@@ -1,7 +1,7 @@
 {
     "name": "atoum/blackfire-extension",
     "type": "library",
-    "description": "Use blackfire extensions in atoum",
+    "description": "Insrument your atoum unit tests with blackfire",
     "keywords": ["blakcfire","atoum","test","unit testing","performance"],
     "homepage": "http://www.atoum.org",
     "license": "MIT",
