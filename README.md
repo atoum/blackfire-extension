@@ -56,7 +56,6 @@ When running this test, the callback will be automatically instrumented and exec
 
 ![Instrumentation result](doc/screenshot.png)
 
-
 ## Install it
 
 Install extension using [composer](https://getcomposer.org):
@@ -76,5 +75,9 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'a
 
 $runner->addExtension(new \mageekguy\atoum\blackfire\extension());
 ```
+
+## Test filtering
+
+If you need to run the tests without the blackfire extension, you can use [atoum's tags](http://docs.atoum.org/en/latest/launch_test.html#tags) and the [ruler extension](https://github.com/atoum/ruler-extension).
 
 
