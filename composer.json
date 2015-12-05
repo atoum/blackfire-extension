@@ -15,5 +15,8 @@
         "psr-4": {
             "mageekguy\\atoum\\blackfire\\": "classes"
         }
+    },
+    "require": {
+        "blackfire/php-sdk": "^1.4"
     }
 }
