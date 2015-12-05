@@ -30,7 +30,7 @@ class Example extends atoum
 
             sleep(4);
 
-            //some code of atoum assertions
+            //some code and/or atoum assertions
             $this->boolean(true)->isTrue();
         };
 
@@ -52,7 +52,7 @@ class Example extends atoum
 }
 ```
 
-When running this test, the callback will be automatically instumented and execute on Blackfire the assertions defined by the Configuration. If they fail, an atoum error will be displayed.The above example will have this output : 
+When running this test, the callback will be automatically instrumented and execute on Blackfire the assertions defined by the Configuration. If they fail, an atoum error will be displayed.The above example will have this output : 
 
 ![Instrumentation result](doc/screenshot.png)
 
