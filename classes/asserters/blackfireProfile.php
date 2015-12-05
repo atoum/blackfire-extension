@@ -3,22 +3,26 @@
 namespace mageekguy\atoum\blackfire\asserters;
 
 use Blackfire\Client;
+use Blackfire\Profile\Configuration;
+use Blackfire\Exception\ExceptionInterface;
+
 use
     mageekguy\atoum\asserters,
-    mageekguy\atoum\exceptions,
-    Blackfire\Exception\ExceptionInterface
+    mageekguy\atoum\exceptions
 ;
 
-class blackfire extends asserters\object
+class blackfireProfile extends asserters\object
 {
     /**
-     * @var \Blackfire\Profile
+     * @param Client $client
+     * @param \closure $callback
+     * @param Configuration $config
+     *
+     * @return $this
      */
-    protected $lastProfile;
-
     public function setWith($client, $callback = null, $config = null)
     {
-        if (!($client instanceof \Blackfire\Client))
+        if (!($client instanceof Client))
         {
             $this->fail($this->_('%s is not a blackfire client', $this));
         }
@@ -28,7 +32,7 @@ class blackfire extends asserters\object
             $this->fail($this->_('%s is not a closure', $this));
         }
 
-        if (!($config instanceof \Blackfire\Profile\Configuration))
+        if (!($config instanceof Configuration))
         {
             $this->fail($this->_('%s is not a profile configuration', $this));
         }
@@ -38,32 +42,32 @@ class blackfire extends asserters\object
 
             $callback();
 
-            $this->lastProfile = $client->endProbe($probe);
+            $profile = $client->endProbe($probe);
 
         } catch (ExceptionInterface $e) {
             $this->fail($e->getMessage());
         }
 
-        parent::setWith(new \ArrayObject(), false);
+        parent::setWith($profile);
 
         return $this;
     }
 
-    public function matchesConfigAssertion()
+    /**
+     * @return $this
+     */
+    public function matchesAssertions()
     {
-        if (null === $this->lastProfile) {
-            $this->fail($this->_('No profile found'));
+        $profile = $this->valueIsSet()->value;
+
+        if ($isSuccessFul = $profile->isSuccessful())
+        {
+            return $this->pass();
         }
 
-        if ($this->lastProfile->isSuccessful()) {
-            echo 'pass';
-            //$this->pass();
-            return $this;
-        }
+        $failureDescription = sprintf('An error occurred when profiling the test. More information at %s', $profile->getUrl());
 
-        $failureDescription = sprintf('An error occurred when profiling the test. More information at %s', $this->lastProfile->getUrl());
-
-        $tests = $this->lastProfile->getTests();
+        $tests = $profile->getTests();
 
         $failures = 0;
         $details = '';
@@ -78,14 +82,12 @@ class blackfire extends asserters\object
                 $details .= sprintf("      - %s\n", $assertion);
             }
         }
-        $details .= sprintf("\nMore information at %s.", $this->lastProfile->getUrl());
+        $details .= sprintf("\nMore information at %s.", $profile->getUrl());
 
         $failureDescription = "Failed asserting that Blackfire tests pass.\n";
         $failureDescription .= sprintf("%d tests failures out of %d.\n\n", $failures, count($tests));
         $failureDescription .= $details;
 
         $this->fail($failureDescription);
-
-        return $this;
     }
 }
