@@ -85,9 +85,17 @@ EOF;
         ;
 
 
-        $this->calling($clientMock)->endProbe = $this->getOkProfile();
-        $testedClass->setWith($clientMock, function() {}, $config);
-        $testedClass->matchesAssertions();
+        $this
+            ->if($test = new \mock\mageekguy\atoum\test())
+            ->if($testedClassMock = new \mock\mageekguy\atoum\blackfire\asserters\blackfireProfile())
+                ->and($this->calling($clientMock)->endProbe = $this->getOkProfile())
+                ->and($testedClass->setWithTest($test))
+                ->and($testedClass->setWith($clientMock, function() {}, $config))
+                ->and($testedClass->matchesAssertions())
+            ->then()
+                ->integer($test->getScore()->getPassNumber())
+                    ->isEqualTo(2)
+        ;
     }
 
     protected function getErrorProfile()
