@@ -17,6 +17,7 @@
         }
     },
     "require": {
+        "atoum/atoum": "<3.0",
         "blackfire/php-sdk": "^1.4"
     }
 }
