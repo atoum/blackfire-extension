@@ -1,0 +1,19 @@
+{
+    "name": "atoum/blackfire-extension",
+    "type": "library",
+    "description": "Use blackfire extensions in atoum",
+    "keywords": ["blakcfire","atoum","test","unit testing","performance"],
+    "homepage": "http://www.atoum.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrien Gallou",
+            "email": "adriengallou@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "mageekguy\\atoum\\blackfire\\": "classes"
+        }
+    }
+}
