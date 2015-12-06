@@ -17,39 +17,32 @@ use atoum;
 
 class Example extends atoum
 {
-    protected $blackfire;
+    private $blackfireClient;
 
     public function testExemple()
     {
-        $config = new \Blackfire\Profile\Configuration();
-        $config
-            ->assert('main.wall_time < 2s', "Temps d'execution")
-        ;
-
-        $callback = function() {
-
-            sleep(4);
-
-            //some code and/or atoum assertions
-            $this->boolean(true)->isTrue();
-        };
-
         $this
-            ->blackfireProfile($this->getBlackfireClient(), $callback, $config)
-            ->matchesAssertions()
+            ->blackfire($this->getBlackfireClient())
+                ->assert('main.wall_time < 2s', "Temps d'execution")
+                ->profile(function() {
+                    sleep(4);
+                    //some code of atoum assertions
+                    $this->boolean(true)->isTrue();
+                })
         ;
     }
 
     private function getBlackfireClient()
     {
-        if (null === $this->blackfire) {
+        if (null === $this->blackfireClient) {
             $config = new \Blackfire\ClientConfiguration($_ENV['BLACKFIRE_CLIENT_ID'], $_ENV['BLACKFIRE_CLIENT_TOKEN']);
-            $this->blackfire = new \Blackfire\Client($config);
+            $this->blackfireClient = new \Blackfire\Client($config);
         }
 
-        return $this->blackfire;
+        return $this->blackfireClient;
     }
 }
+
 ```
 
 When running this test, the callback will be automatically instrumented and execute on Blackfire the assertions defined by the Configuration. If they fail, an atoum error will be displayed.The above example will have this output : 
