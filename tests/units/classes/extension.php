@@ -20,7 +20,7 @@ class extension extends atoum\test
             ->then
                 ->object($extension->setTest($test))->isIdenticalTo($extension)
                 ->mock($manager)
-                    ->call('setHandler')->withArguments('blackfireProfile')->once()
+                    ->call('setHandler')->withArguments('blackfire')->once()
         ;
     }
 }

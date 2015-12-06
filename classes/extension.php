@@ -2,6 +2,7 @@
 
 namespace mageekguy\atoum\blackfire;
 
+use Blackfire\Client;
 use mageekguy\atoum;
 use mageekguy\atoum\observable;
 use mageekguy\atoum\runner;
@@ -21,13 +22,17 @@ class extension implements atoum\extension
 
         $test->getAssertionManager()
             ->setHandler(
-                'blackfireProfile',
-                function($client, $callback, $configuration) use ($test, & $asserter) {
+                'blackfire',
+                function(Client $client) use ($test, & $asserter) {
                     if ($asserter === null)
                     {
-                        $asserter = new atoum\blackfire\asserters\blackfireProfile($test->getAsserterGenerator());
+                        $asserter = new atoum\blackfire\asserters\blackfire($test->getAsserterGenerator());
                     }
-                    return $asserter->setWith($client, $callback, $configuration);
+
+                    $asserter->setClient($client);
+                    $asserter->setWithTest($test);
+
+                    return $asserter;
                 }
             )
         ;
