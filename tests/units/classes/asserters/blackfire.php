@@ -100,11 +100,11 @@ EOF;
 
     protected function getErrorProfile()
     {
-        return new \Blackfire\Profile(include __DIR__ . '/_data/error_profile.php');
+        return new \Blackfire\Profile(function () { return include __DIR__ . '/_data/error_profile.php'; });
     }
 
     protected function getOkProfile()
     {
-        return new \Blackfire\Profile(include __DIR__ . '/_data/ok_profile.php');
+        return new \Blackfire\Profile(function () { return include __DIR__ . '/_data/ok_profile.php'; });
     }
 }
