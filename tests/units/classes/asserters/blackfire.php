@@ -73,7 +73,6 @@ class blackfire extends atoum\test
         $this
             ->given(
                 $test = new \mock\mageekguy\atoum\test(),
-                //$testedClassMock = new \mock\mageekguy\atoum\blackfire\asserters\blackfireProfile(),
                 ($this->calling($clientMock)->endProbe = $this->getOkProfile())
             )
             ->if(
