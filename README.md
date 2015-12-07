@@ -28,7 +28,7 @@ class Example extends atoum
                     sleep(4); //just to make the test fail
 
                     //some code to profile
-                    /.....
+                    // ...
 
                     //you also can run atoum assertions inside this callable
                     //but beware, atoum's logic will also be profiled.
