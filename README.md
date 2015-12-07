@@ -25,7 +25,7 @@ class Example extends atoum
             ->blackfire($this->getBlackfireClient())
                 ->assert('main.wall_time < 2s', "Temps d'execution")
                 ->profile(function() {
-                    sleep(4);
+                    sleep(4); //just to make the test fail
                     //some code of atoum assertions
                     $this->boolean(true)->isTrue();
                 })
