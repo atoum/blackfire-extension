@@ -3,6 +3,7 @@
 namespace mageekguy\atoum\blackfire\asserters\tests\units;
 
 use Blackfire\Profile\Metric;
+use Blackfire\Profile\MetricLayer;
 use
     mageekguy\atoum,
     mageekguy\atoum\blackfire\asserters\blackfire as testedClass
@@ -96,6 +97,22 @@ class blackfire extends atoum\test
                 ->isEqualTo($testedClass)
             ->mock($mock)
                 ->call('defineMetric')->once()->withArguments($metric)
+        ;
+
+        return;
+    }
+
+    public function testAddLayer()
+    {
+        $this
+            ->given($mock = new \mock\Blackfire\Profile\Configuration)
+                ->and($testedClass = new testedClass())
+                ->and($testedClass->setConfiguration($mock))
+                ->and($metricLayer = new MetricLayer("metriclayername"))
+            ->object($testedClass->defineLayer($metricLayer))
+                ->isEqualto($testedClass)
+            ->mock($mock)
+                ->call('defineLayer')->once()->withArguments($metricLayer)
         ;
 
         return;

@@ -44,6 +44,7 @@ class blackfire extends asserter
         switch ($method)
         {
             case 'defineMetric':
+            case 'defineLayer':
                 call_user_func_array(array($this->configuration, $method), $arguments);
 
                 return $this;
