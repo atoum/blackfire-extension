@@ -33,6 +33,24 @@ class blackfire extends asserter
         $this->configuration = new Configuration();
     }
 
+    /**
+     * @param string $method
+     * @param array $arguments
+     *
+     * @return $this|mixed
+     */
+    public function __call($method, $arguments)
+    {
+        switch ($method)
+        {
+            case 'defineMetric':
+                call_user_func_array(array($this->configuration, $method), $arguments);
+
+                return $this;
+            default:
+                return parent::__call($method, $arguments);
+        }
+    }
 
     /**
      * @param string $assertion

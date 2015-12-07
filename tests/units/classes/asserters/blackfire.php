@@ -2,6 +2,7 @@
 
 namespace mageekguy\atoum\blackfire\asserters\tests\units;
 
+use Blackfire\Profile\Metric;
 use
     mageekguy\atoum,
     mageekguy\atoum\blackfire\asserters\blackfire as testedClass
@@ -82,6 +83,22 @@ class blackfire extends atoum\test
                 $testedClass->profile(function() {})
             )
         ;
+    }
+
+    public function testAddMetric()
+    {
+        $this
+            ->given($mock = new \mock\Blackfire\Profile\Configuration)
+                ->and($testedClass = new testedClass())
+                ->and($testedClass->setConfiguration($mock))
+                ->and($metric = new Metric("metricname"))
+            ->object($testedClass->defineMetric($metric))
+                ->isEqualTo($testedClass)
+            ->mock($mock)
+                ->call('defineMetric')->once()->withArguments($metric)
+        ;
+
+        return;
     }
 
     protected function getExpectedErrorMessage()
