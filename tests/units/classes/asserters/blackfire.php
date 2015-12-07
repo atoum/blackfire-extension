@@ -24,20 +24,6 @@ class blackfire extends atoum\test
         ;
     }
 
-    public function testSetWithWithoutClosure()
-    {
-        $this
-            ->exception(function() {
-                $client = new \mock\Blackfire\Client();
-                $testedClass = new testedClass();
-                $testedClass->setClient($client);
-                $testedClass->profile(new \ArrayObject());
-            })
-            ->hasMessage('profile parameter is not a closure')
-            ->isInstanceOf('\mageekguy\atoum\asserter\exception')
-        ;
-    }
-
     public function testAll()
     {
         $this

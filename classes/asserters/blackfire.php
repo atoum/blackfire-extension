@@ -104,14 +104,9 @@ class blackfire extends asserter
      *
      * @return \mageekguy\atoum\asserters\object
      */
-    public function profile($callback)
+    public function profile(\closure $callback)
     {
         $client = $this->getClient();
-
-        if (!($callback instanceof \closure))
-        {
-            $this->fail($this->_('profile parameter is not a closure'));
-        }
 
         try {
             $probe = $client->createProbe($this->configuration);
