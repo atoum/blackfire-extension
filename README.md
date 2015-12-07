@@ -26,7 +26,12 @@ class Example extends atoum
                 ->assert('main.wall_time < 2s', "Temps d'execution")
                 ->profile(function() {
                     sleep(4); //just to make the test fail
-                    //some code of atoum assertions
+
+                    //some code to profile
+                    /.....
+
+                    //you also can run atoum assertions inside this callable
+                    //but beware, atoum's logic will also be profiled.
                     $this->boolean(true)->isTrue();
                 })
         ;
