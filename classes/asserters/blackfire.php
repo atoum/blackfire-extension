@@ -45,25 +45,13 @@ class blackfire extends asserter
         {
             case 'defineMetric':
             case 'defineLayer':
+            case 'assert':
                 call_user_func_array(array($this->configuration, $method), $arguments);
 
                 return $this;
             default:
                 return parent::__call($method, $arguments);
         }
-    }
-
-    /**
-     * @param string $assertion
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function assert($assertion, $name = '')
-    {
-        $this->configuration->assert($assertion, $name);
-
-        return $this;
     }
 
     /**
