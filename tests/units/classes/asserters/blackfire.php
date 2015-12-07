@@ -118,6 +118,21 @@ class blackfire extends atoum\test
         return;
     }
 
+    public function testAssert()
+    {
+        $this
+            ->given($mockConfiguration = new \mock\Blackfire\Profile\Configuration)
+                ->and($testedClass = new testedClass())
+                ->and($testedClass->setConfiguration($mockConfiguration))
+            ->object($testedClass->assert("main.wall_time < 2s", 'assertname'))
+                ->isEqualto($testedClass)
+            ->mock($mockConfiguration)
+                ->call('assert')->once()->withArguments("main.wall_time < 2s", 'assertname')
+        ;
+
+        return;
+    }
+
     protected function getExpectedErrorMessage()
     {
         return <<<EOF
