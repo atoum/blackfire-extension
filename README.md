@@ -17,8 +17,6 @@ use atoum;
 
 class Example extends atoum
 {
-    private $blackfireClient;
-
     public function testExemple()
     {
         $this
@@ -36,16 +34,6 @@ class Example extends atoum
                 })
         ;
     }
-
-    private function getBlackfireClient()
-    {
-        if (null === $this->blackfireClient) {
-            $config = new \Blackfire\ClientConfiguration($_ENV['BLACKFIRE_CLIENT_ID'], $_ENV['BLACKFIRE_CLIENT_TOKEN']);
-            $this->blackfireClient = new \Blackfire\Client($config);
-        }
-
-        return $this->blackfireClient;
-    }
 }
 
 ```
@@ -62,7 +50,7 @@ Install extension using [composer](https://getcomposer.org):
 composer require --dev atoum/blackfire-extension
 ```
 
-Enable the extension using atoum configuration file:
+Enable and configure the extension using atoum configuration file:
 
 ```php
 <?php
@@ -71,7 +59,10 @@ Enable the extension using atoum configuration file:
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$runner->addExtension(new \mageekguy\atoum\blackfire\extension());
+$extension
+    ->setClientConfiguration(new \Blackfire\ClientConfiguration($_ENV['BLACKFIRE_CLIENT_ID'], $_ENV['BLACKFIRE_CLIENT_TOKEN']))
+    ->addToRunner($runner)
+;
 ```
 
 ## Test filtering
