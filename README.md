@@ -20,7 +20,7 @@ class Example extends atoum
     public function testExemple()
     {
         $this
-            ->blackfire($this->getBlackfireClient())
+            ->blackfire
                 ->assert('main.wall_time < 2s', "Temps d'execution")
                 ->profile(function() {
                     sleep(4); //just to make the test fail
@@ -72,7 +72,7 @@ $extension
 
 ```php
 $this
-    ->blackfire($this->getBlackfireClient())
+    ->blackfire
         ->defineMetric(new \Blackfire\Profile\Metric("example_method_calls", "=Example::method"))
         ->assert("metrics.example_method_calls.count < 10")
         ->profile(function() {
@@ -86,7 +86,7 @@ $this
 
 You can learn more about this on the [custom metric](https://blackfire.io/docs/reference-guide/metrics#custom-metrics)'s section of Blackfire documentation.
 
-### Pass your own configuration
+### Pass your own profile configuration
 
 ```php
 $this
@@ -95,7 +95,7 @@ $this
         $profileConfiguration->setTitle('Profile configuration title'),
         $testedClass = new TestedClass()
     )
-    ->blackfire($this->getBlackfireClient())
+    ->blackfire
         ->setConfiguration($profileConfiguration)
         ->assert("main.peak_memory < 10mb")
         ->profile(function() use ($testedClass) {
@@ -105,6 +105,24 @@ $this
 ```
 
 You can learn more about this on the [profile basic configurable](https://blackfire.io/docs/reference-guide/php-sdk#profile-basic-configuration)'s section of Blackfire documentation.
+
+### Pass a custom client
+
+You can either pass the blackfire client in the `.atoum.php` config file (when loading the extension). In that case the client will be used in all the blackfire assertions. You also can load/overload it in the `blackfire` assert. For example:
+
+```php
+$this
+    ->given(
+      $config = new \Blackfire\ClientConfiguration($_ENV['BLACKFIRE_CLIENT_ID'], $_ENV['BLACKFIRE_CLIENT_TOKEN']);
+      $client = new \Blackfire\Client($config);
+    )
+    ->blackfire(client)
+        ->assert('main.wall_time < 2s')
+        ->profile(function() {
+            //code to profile
+        })
+;
+```
 
 
 ## Test filtering
