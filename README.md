@@ -66,8 +66,93 @@ $extension
 ;
 ```
 
+## Other examples
+
+### Define custom metrics
+
+```php
+$this
+    ->blackfire($this->getBlackfireClient())
+        ->defineMetric(new \Blackfire\Profile\Metric("example_method_calls", "=Example::method"))
+        ->assert("metrics.example_method_calls.count < 10")
+        ->profile(function() {
+            $testedClass = new TestedClass();
+            for ($i = 0; $i < 8; $i++) {
+                $testedClass->method();
+            }
+        })
+;
+```
+
+You can learn more about this on the [custom metric](https://blackfire.io/docs/reference-guide/metrics#custom-metrics)'s section of Blackfire documentation.
+
+### Pass your own configuration
+
+```php
+$this
+    ->given(
+        $profileConfiguration = new \Blackfire\Profile\Configuration(),
+        $profileConfiguration->setTitle('Profile configuration title'),
+        $testedClass = new TestedClass()
+    )
+    ->blackfire($this->getBlackfireClient())
+        ->setConfiguration($profileConfiguration)
+        ->assert("main.peak_memory < 10mb")
+        ->profile(function() use ($testedClass) {
+            $testedClass->method();
+        })
+;
+```
+
+You can learn more about this on the [profile basic configurable](https://blackfire.io/docs/reference-guide/php-sdk#profile-basic-configuration)'s section of Blackfire documentation.
+
+
 ## Test filtering
 
-If you need to run the tests without the blackfire extension, you can use [atoum's tags](http://docs.atoum.org/en/latest/launch_test.html#tags) and the [ruler extension](https://github.com/atoum/ruler-extension).
+To avoid running the test if the blackfire extension is not loaded, you can use the `@extensions` annotation.
+
+```php
+    /**
+     * @extensions blackfire
+     */
+    public function testExemple()
+    {
+        $this
+            ->blackfire($this->getBlackfireClient())
+                ->defineMetric(new \Blackfire\Profile\Metric("example_method_calls", "=Example::method"))
+                ->assert("metrics.example_method_calls.count < 10")
+                ->profile(function() {
+                    $testedClass = new TestedClass();
+                    for ($i = 0; $i < 8; $i++) {
+                        $testedClass->method();
+                    }
+                })
+        ;
+    }
+```
+
+You can add this annotation on both the test method or the test class.
+
+Then, when running the test, the classes/methods with this annotation will be skipped if the extension is not present/loaded:
+
+```
+Success (1 test, 0/1 method, 0 void method, 1 skipped method, 0 assertion)!
+> There is 1 skipped method:
+=> Tests\Units\Example::testExemple(): PHP extension 'blackfire' is not loaded
+```
+
+You also can use [atoum's tags](http://docs.atoum.org/en/latest/launch_test.html#tags) and the [ruler extension](https://github.com/atoum/ruler-extension) to only run the blackfire tests.
 
 
+## Links
+
+* [Blackfire.io](https://blackfire.io)
+* [Blackfire's documentation](https://blackfire.io/docs/introduction)
+* [Blackfire PHP-SDK](https://github.com/blackfireio/php-sdk)
+* [atoum](http://atoum.org)
+* [atoum's documentation](http://docs.atoum.org)
+
+
+## Licence
+
+blackfire-extension is released under the MIT License. See the bundled LICENSE file for details.
