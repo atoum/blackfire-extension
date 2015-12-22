@@ -71,7 +71,7 @@ Enable the extension using atoum configuration file:
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$runner->addExtension(new \mageekguy\atoum\blackfire\extension());
+$runner->addExtension(new \mageekguy\atoum\blackfire\extension($script));
 ```
 
 ## Other examples
