@@ -1,127 +1,138 @@
 <?php
 
-namespace mageekguy\atoum\blackfire\asserters\tests\units;
+namespace {
+    class PHPUnit_Framework_TestCase {
 
-use Blackfire\Profile\Metric;
-use Blackfire\Profile\MetricLayer;
-use
-    mageekguy\atoum,
-    mageekguy\atoum\blackfire\asserters\blackfire as testedClass
-;
-
-class blackfire extends atoum\test
-{
-
-    public function testSetWithWithoutClient()
-    {
-        $this
-            ->exception(function() {
-                $testedClass = new testedClass();
-                $testedClass->profile(function () {});
-            })
-            ->hasMessage('Client has not been set')
-            ->isInstanceOf('\LogicException')
-        ;
     }
+}
 
-    public function testAll()
+namespace mageekguy\atoum\blackfire\asserters\tests\units {
+
+    use Blackfire\Profile\Metric;
+    use Blackfire\Profile\MetricLayer;
+    use
+        mageekguy\atoum,
+        mageekguy\atoum\blackfire\asserters\blackfire as testedClass;
+
+    class blackfire extends atoum\test
     {
-        $this
-            ->mockGenerator->shuntParentClassCalls()
-            ->mockGenerator->orphanize('__construct')
-            ->given(
-                $probeMock = new \mock\Blackfire\Probe(),
-                $clientMock = new \mock\Blackfire\Client()
-            )
-            ->mockGenerator->unshuntParentClassCalls()
-            ->given(
-                ($this->calling($clientMock)->createProbe = $probeMock),
-                ($this->calling($clientMock)->endProbe = $this->getErrorProfile()),
-                $config = new \Blackfire\Profile\Configuration()
-            )
-        ;
 
-        $this
-            ->if(
-                $testedClass = new testedClass(),
-                $testedClass->setConfiguration($config),
-                $testedClass->setClient($clientMock)
-            )
-            ->then
-                ->exception(function() use ($testedClass) {
-                    $testedClass->profile(function () {});
-                })
-                    ->hasMessage($this->getExpectedErrorMessage())
-                    ->isInstanceOf('\mageekguy\atoum\asserter\exception')
+        public function testSetWithWithoutClient()
+        {
+            $this
+                ->exception(
+                    function () {
+                        $testedClass = new testedClass();
+                        $testedClass->profile(
+                            function () {
+                            }
+                        );
+                    }
+                )
+                ->hasMessage('Client has not been set')
+                ->isInstanceOf('\LogicException');
+        }
+
+        public function testAll()
+        {
+            $this
+                ->mockGenerator->shuntParentClassCalls()
+                ->mockGenerator->orphanize('__construct')
+                ->given(
+                    $probeMock = new \mock\Blackfire\Probe(),
+                    $clientMock = new \mock\Blackfire\Client()
+                )
+                ->mockGenerator->unshuntParentClassCalls()
+                ->given(
+                    ($this->calling($clientMock)->createProbe = $probeMock),
+                    ($this->calling($clientMock)->endProbe = $this->getErrorProfile()),
+                    $config = new \Blackfire\Profile\Configuration()
+                );
+
+            $this
+                ->if(
+                    $testedClass = new testedClass(),
+                    $testedClass->setConfiguration($config),
+                    $testedClass->setClient($clientMock)
+                )
+                ->then
+                ->exception(
+                    function () use ($testedClass) {
+                        $testedClass->profile(
+                            function () {
+                            }
+                        );
+                    }
+                )
+                ->hasMessage($this->getExpectedErrorMessage())
+                ->isInstanceOf('\mageekguy\atoum\asserter\exception')
                 ->mock($clientMock)->call('createProbe')->once()
-                ->mock($clientMock)->call('endProbe')->once()
-        ;
+                ->mock($clientMock)->call('endProbe')->once();
 
 
-        $this
-            ->given(
-                $test = new \mock\mageekguy\atoum\test(),
-                ($this->calling($clientMock)->endProbe = $this->getOkProfile())
-            )
-            ->if(
-                $testedClass = new testedClass(),
-                $testedClass->setWithTest($test),
-                $testedClass->setClient($clientMock),
-                $testedClass->profile(function() {})
-            )
-        ;
-    }
+            $this
+                ->given(
+                    $test = new \mock\mageekguy\atoum\test(),
+                    ($this->calling($clientMock)->endProbe = $this->getOkProfile())
+                )
+                ->if(
+                    $testedClass = new testedClass(),
+                    $testedClass->setWithTest($test),
+                    $testedClass->setClient($clientMock),
+                    $testedClass->profile(
+                        function () {
+                        }
+                    )
+                );
+        }
 
-    public function testAddMetric()
-    {
-        $this
-            ->given($mock = new \mock\Blackfire\Profile\Configuration)
+        public function testAddMetric()
+        {
+            $this
+                ->given($mock = new \mock\Blackfire\Profile\Configuration)
                 ->and($testedClass = new testedClass())
                 ->and($testedClass->setConfiguration($mock))
                 ->and($metric = new Metric("metricname"))
-            ->object($testedClass->defineMetric($metric))
+                ->object($testedClass->defineMetric($metric))
                 ->isEqualTo($testedClass)
-            ->mock($mock)
-                ->call('defineMetric')->once()->withArguments($metric)
-        ;
+                ->mock($mock)
+                ->call('defineMetric')->once()->withArguments($metric);
 
-        return;
-    }
+            return;
+        }
 
-    public function testAddLayer()
-    {
-        $this
-            ->given($mock = new \mock\Blackfire\Profile\Configuration)
+        public function testAddLayer()
+        {
+            $this
+                ->given($mock = new \mock\Blackfire\Profile\Configuration)
                 ->and($testedClass = new testedClass())
                 ->and($testedClass->setConfiguration($mock))
                 ->and($metricLayer = new MetricLayer("metriclayername"))
-            ->object($testedClass->defineLayer($metricLayer))
+                ->object($testedClass->defineLayer($metricLayer))
                 ->isEqualto($testedClass)
-            ->mock($mock)
-                ->call('defineLayer')->once()->withArguments($metricLayer)
-        ;
+                ->mock($mock)
+                ->call('defineLayer')->once()->withArguments($metricLayer);
 
-        return;
-    }
+            return;
+        }
 
-    public function testAssert()
-    {
-        $this
-            ->given($mockConfiguration = new \mock\Blackfire\Profile\Configuration)
+        public function testAssert()
+        {
+            $this
+                ->given($mockConfiguration = new \mock\Blackfire\Profile\Configuration)
                 ->and($testedClass = new testedClass())
                 ->and($testedClass->setConfiguration($mockConfiguration))
-            ->object($testedClass->assert("main.wall_time < 2s", 'assertname'))
+                ->object($testedClass->assert("main.wall_time < 2s", 'assertname'))
                 ->isEqualto($testedClass)
-            ->mock($mockConfiguration)
-                ->call('assert')->once()->withArguments("main.wall_time < 2s", 'assertname')
-        ;
+                ->mock($mockConfiguration)
+                ->call('assert')->once()->withArguments("main.wall_time < 2s", 'assertname');
 
-        return;
-    }
+            return;
+        }
 
-    protected function getExpectedErrorMessage()
-    {
-        return <<<EOF
+        protected function getExpectedErrorMessage()
+        {
+            return <<<EOF
 Failed asserting that Blackfire tests pass.
 1 tests failures out of 1.
 
@@ -130,15 +141,24 @@ Failed asserting that Blackfire tests pass.
 
 More information at https://blackfire.io/profiles/a6337421-337a-47c3-a1ef-35f606883edd/graph.
 EOF;
-    }
+        }
 
-    protected function getErrorProfile()
-    {
-        return new \Blackfire\Profile(function () { return include __DIR__ . '/_data/error_profile.php'; });
-    }
+        protected function getErrorProfile()
+        {
+            return new \Blackfire\Profile(
+                function () {
+                    return include __DIR__ . '/_data/error_profile.php';
+                }
+            );
+        }
 
-    protected function getOkProfile()
-    {
-        return new \Blackfire\Profile(function () { return include __DIR__ . '/_data/ok_profile.php'; });
+        protected function getOkProfile()
+        {
+            return new \Blackfire\Profile(
+                function () {
+                    return include __DIR__ . '/_data/ok_profile.php';
+                }
+            );
+        }
     }
 }
