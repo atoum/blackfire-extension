@@ -1,4 +1,4 @@
-# atoum/blackfire-extension [![Build Status](https://travis-ci.org/agallou/blackfire-extension.svg?branch=master)](https://travis-ci.org/agallou/blackfire-extension)
+# atoum/blackfire-extension [![Build Status](https://travis-ci.org/atoum/blackfire-extension.svg?branch=master)](https://travis-ci.org/atoum/blackfire-extension)
 
 blackfire-extension allows you to use blackfire assertions inside [atoum](https://github.com/atoum/atoum).
 
@@ -59,7 +59,7 @@ Enable and configure the extension using atoum configuration file:
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$extension = new mageekguy\atoum\blackfire\extension();
+$extension = new mageekguy\atoum\blackfire\extension($script);
 $extension
     ->setClientConfiguration(new \Blackfire\ClientConfiguration($_ENV['BLACKFIRE_CLIENT_ID'], $_ENV['BLACKFIRE_CLIENT_TOKEN']))
     ->addToRunner($runner)
