@@ -1,4 +1,4 @@
-# atoum/blackfire-extension [![Build Status](https://travis-ci.org/agallou/blackfire-extension.svg?branch=master)](https://travis-ci.org/agallou/blackfire-extension)
+# atoum/blackfire-extension [![Build Status](https://travis-ci.org/atoum/blackfire-extension.svg?branch=master)](https://travis-ci.org/atoum/blackfire-extension)
 
 blackfire-extension allows you to use blackfire assertions inside [atoum](https://github.com/atoum/atoum).
 
