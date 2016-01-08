@@ -1,7 +1,7 @@
 # `dev-master`
 
 
-# 2.1.0 - 2015-12-08
+# 2.1.0 - 2016-01-08
 
 * [#3](https://github.com/atoum/atoum/pull/3) The clientConfiguration could now be configured inside the .atoum.php file ([@agallou])
 * [#6](https://github.com/atoum/atoum/pull/6) Execute the extension tests during the --test-it and --test-ext ([@agallou])
