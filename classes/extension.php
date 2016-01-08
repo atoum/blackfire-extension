@@ -30,8 +30,27 @@ class extension implements atoum\extension
         }
     }
 
+    public function __construct()
+    {
+        $this->configuration = new configuration();
+    }
+
+    public function setClientConfiguration(ClientConfiguration $v)
+    {
+        $this->configuration->setClientConfiguration($v);
+
+        return $this;
+    }
+
     public function setRunner(runner $runner)
     {
+        return $this;
+    }
+
+    public function addToRunner(\mageekguy\atoum\runner $runner)
+    {
+        $runner->addExtension($this, $this->configuration);
+
         return $this;
     }
 
@@ -39,13 +58,24 @@ class extension implements atoum\extension
     {
         $asserter = null;
 
+        $configuration = $test->getExtensionConfiguration($this);
+
+        if ($configuration !== null)
+        {
+            $this->configuration = $configuration;
+        }
+
         $test->getAssertionManager()
             ->setHandler(
                 'blackfire',
-                function(Client $client) use ($test, & $asserter) {
+                function(Client $client = null) use ($test, & $asserter) {
                     if ($asserter === null)
                     {
                         $asserter = new atoum\blackfire\asserters\blackfire($test->getAsserterGenerator());
+                    }
+
+                    if (null === $client) {
+                        $client = new Client($this->configuration->getClientConfiguration());
                     }
 
                     $asserter->setClient($client);
