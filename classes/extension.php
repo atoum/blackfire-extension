@@ -28,10 +28,6 @@ class extension implements atoum\extension
                 ->addArgumentHandler($testHandler, array('--test-it'))
             ;
         }
-    }
-
-    public function __construct()
-    {
         $this->configuration = new configuration();
     }
 
