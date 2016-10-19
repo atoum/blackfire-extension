@@ -2,7 +2,7 @@
     "name": "atoum/blackfire-extension",
     "type": "library",
     "description": "Write your Blackfire test suites with atoum",
-    "keywords": ["blackfire","atoum","test","unit testing","performance"],
+    "keywords": ["blackfire","atoum","test","unit testing","performance","atoum-extension"],
     "homepage": "http://www.atoum.org",
     "license": "MIT",
     "authors": [
