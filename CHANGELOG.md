@@ -1,5 +1,6 @@
 # `dev-master`
 
+* [#14](https://github.com/atoum/atoum/pull/14) The extension is now autoloaded ([@jubianchi])
 
 # 2.1.0 - 2016-01-08
 
@@ -32,3 +33,4 @@
 
 [@hywan]: https://github.com/hywan
 [@agallou]: https://github.com/agallou
+[@jubianchi]: https://github.com/jubianchi
