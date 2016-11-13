@@ -1,12 +1,30 @@
 language: php
+
+sudo: false
+
 php:
   - 5.5
   - 5.6
+  - 7.0
+  - nightly
+
+cache:
+  directories:
+    - vendor
+
 env:
   matrix:
     - COMPOSER_PREFER="--prefer-stable"
     - COMPOSER_PREFER="--prefer-lowest"
-sudo: false
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+notifications:
+  irc: "irc.freenode.org##atoum"
+
 script:
   - composer update $COMPOSER_PREFER
-  - ./vendor/bin/atoum
+  - vendor/bin/atoum --test-ext -p 'php -n -ddate.timezone=UTC'
+
