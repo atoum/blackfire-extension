@@ -59,8 +59,8 @@ Enable and configure the extension using atoum configuration file:
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$extension = new mageekguy\atoum\blackfire\extension($script);
-$extension
+$runner
+    ->getExtension(mageekguy\atoum\blackfire\extension::class)
     ->setClientConfiguration(new \Blackfire\ClientConfiguration($_ENV['BLACKFIRE_CLIENT_ID'], $_ENV['BLACKFIRE_CLIENT_TOKEN']))
     ->addToRunner($runner)
 ;

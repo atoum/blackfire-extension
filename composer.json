@@ -14,10 +14,12 @@
     "autoload": {
         "psr-4": {
             "mageekguy\\atoum\\blackfire\\": "classes"
-        }
+        },
+        "files": ["configuration.php"]
     },
+    "minimum-stability": "beta",
     "require": {
-        "atoum/atoum": ">=2.5,<3.0",
-        "blackfire/php-sdk": ">=1.4.5,<2.0"
+        "atoum/atoum": "^2.9",
+        "blackfire/php-sdk": "^1.4.5"
     }
 }
