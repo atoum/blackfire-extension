@@ -174,3 +174,5 @@ You also can use [atoum's tags](http://docs.atoum.org/en/latest/launch_test.html
 ## Licence
 
 blackfire-extension is released under the MIT License. See the bundled LICENSE file for details.
+
+![atoum](http://atoum.org/images/logo/atoum.png)
